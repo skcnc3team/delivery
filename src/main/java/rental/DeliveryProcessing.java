@@ -1,8 +1,15 @@
 package rental;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
-import java.util.List;
+import org.springframework.cloud.stream.messaging.Processor;
+import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.util.MimeTypeUtils;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name="DeliveryProcessing_table")
@@ -44,6 +51,38 @@ public class DeliveryProcessing {
 
 
     }
+
+    //추가
+    @PostPersist
+    public void eventPublish() throws RuntimeException {
+        DeliveryStarted deliveryStarted = new DeliveryStarted();
+
+        deliveryStarted.setId(this.getId());
+        deliveryStarted.setReservationId(this.getReservationId());
+        deliveryStarted.setCarId(this.getCarId());
+        deliveryStarted.setCustomerNm(this.getCustomerNm());
+        deliveryStarted.setAddress(this.getAddress());
+        deliveryStarted.setStatus(this.getStatus());
+        deliveryStarted.setQty(this.getQty());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = null;
+
+        try {
+            json = objectMapper.writeValueAsString(deliveryStarted);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("JSON format exception", e);
+        }
+
+        Processor processor = Application.applicationContext.getBean(Processor.class);
+        MessageChannel outputChannel = processor.output();
+
+        outputChannel.send(MessageBuilder
+                .withPayload(json)
+                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+                .build());
+    }
+
 
 
     public Long getId() {
