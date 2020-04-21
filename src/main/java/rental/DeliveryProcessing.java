@@ -52,9 +52,7 @@ public class DeliveryProcessing {
 
     }
 
-    //추가
-    @PostPersist
-    public void eventPublish() throws RuntimeException {
+    public void eventPublish() {
         DeliveryStarted deliveryStarted = new DeliveryStarted();
 
         deliveryStarted.setId(this.getId());
