@@ -17,18 +17,25 @@ public class PolicyHandler{
 //    }
     @Autowired
     DeliveryProcessingRepository deliveryProcessingRepository;
+    DeliveryProcessing deliveryProcessing = new DeliveryProcessing();
 
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPayed_예약받기(@Payload Payed payed){
 
         if(payed.isMe()){
             System.out.println("##### listener 예약받기 : " + payed.toJson());
-            DeliveryProcessing deliveryProcessing = new DeliveryProcessing();
+            //DeliveryProcessing deliveryProcessing = new DeliveryProcessing();
 
-            deliveryProcessing.setStatus("payed");
+            deliveryProcessing.setStatus("Delivery Start");
 
             deliveryProcessing.setCarId(payed.getCarId());
             deliveryProcessing.setReservationId(payed.getReervationId());
+            deliveryProcessing.setCustomerNm(payed.getCustomerNm());
+            deliveryProcessingRepository.save(deliveryProcessing);
+
+            deliveryProcessing.setStatus("Delivery End");
+
+            System.out.println("##### listener 배달 완료 : " + payed.toJson());
             deliveryProcessingRepository.save(deliveryProcessing);
         }
     }
@@ -45,6 +52,11 @@ public class PolicyHandler{
 
         if(reservationChanged.isMe()){
             System.out.println("##### listener 예약변경 : " + reservationChanged.toJson());
+            deliveryProcessing.setStatus(" reservation changed");
+            deliveryProcessing.setCarId(reservationChanged.getCarId());
+            // deliveryProcessing.setId(reservationChanged.getId());
+            deliveryProcessing.setCustomerNm(reservationChanged.getCustomerNm());
+            deliveryProcessingRepository.save(deliveryProcessing);
         }
     }
 
