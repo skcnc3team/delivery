@@ -1,7 +1,15 @@
 package rental;
 
-public class DeliveryCanceled extends AbstractEvent {
+import javax.persistence.*;
+import org.springframework.beans.BeanUtils;
+import java.util.List;
 
+@Entity
+@Table(name="DeliveryProcessing_table")
+public class DeliveryProcessing {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     private Long reservationId;
     private String carId;
@@ -10,9 +18,33 @@ public class DeliveryCanceled extends AbstractEvent {
     private String status;
     private Integer qty;
 
-    public DeliveryCanceled(){
-        super();
+    @PostPersist
+    public void onPostPersist(){
+        DeliveryStarted deliveryStarted = new DeliveryStarted();
+        BeanUtils.copyProperties(this, deliveryStarted);
+        deliveryStarted.publish();
+
+
     }
+
+    @PostUpdate
+    public void onPostUpdate(){
+        DeliveryCompleted deliveryCompleted = new DeliveryCompleted();
+        BeanUtils.copyProperties(this, deliveryCompleted);
+        deliveryCompleted.publish();
+
+
+    }
+
+    @PostRemove
+    public void onPostRemove(){
+        DeliveryCanceled deliveryCanceled = new DeliveryCanceled();
+        BeanUtils.copyProperties(this, deliveryCanceled);
+        deliveryCanceled.publish();
+
+
+    }
+
 
     public Long getId() {
         return id;
@@ -63,4 +95,8 @@ public class DeliveryCanceled extends AbstractEvent {
     public void setQty(Integer qty) {
         this.qty = qty;
     }
+
+
+
+
 }
