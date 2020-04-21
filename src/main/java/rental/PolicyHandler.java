@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 public class PolicyHandler{
     
     @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverReserved_예약받기(@Payload Reserved reserved){
+    public void wheneverReserved_예약받기(@Payload Payed payed){
 
-        if(reserved.isMe()){
-            System.out.println("##### listener 예약받기 : " + reserved.toJson());
+        if(payed.isMe()){
+            System.out.println("##### listener 예약받기 : " + payed.toJson());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
