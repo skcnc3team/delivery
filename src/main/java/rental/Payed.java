@@ -16,7 +16,6 @@ public class Payed extends AbstractEvent {
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getCarId() {
         return carId;
     }
@@ -24,7 +23,6 @@ public class Payed extends AbstractEvent {
     public void setCarId(String carId) {
         this.carId = carId;
     }
-
     public String getCustomerNm() {
         return customerNm;
     }
@@ -32,7 +30,6 @@ public class Payed extends AbstractEvent {
     public void setCustomerNm(String customerNm) {
         this.customerNm = customerNm;
     }
-
     public Integer getQty() {
         return qty;
     }
@@ -40,7 +37,6 @@ public class Payed extends AbstractEvent {
     public void setQty(Integer qty) {
         this.qty = qty;
     }
-
     public String getReervationId() {
         return reervationId;
     }
