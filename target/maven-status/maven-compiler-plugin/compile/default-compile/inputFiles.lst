@@ -10,6 +10,7 @@ C:\rental\delivery\src\main\java\rental\ReservationChanged.java
 C:\rental\delivery\src\main\java\rental\Application.java
 C:\rental\delivery\src\main\java\rental\DelivertProcessing.java
 C:\rental\delivery\src\main\java\rental\DeliveryProcessingRepository.java
+C:\rental\delivery\src\main\java\rental\Payed.java
 C:\rental\delivery\src\main\java\rental\DeliveryCanceled.java
 C:\rental\delivery\src\main\java\rental\AbstractEvent.java
 C:\rental\delivery\src\main\java\rental\ReservationCanceled.java

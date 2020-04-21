@@ -18,7 +18,7 @@ public class DeliveryProcessing {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    private Long reservationId;
+    private String reservationId;
     private String carId;
     private String customerNm;
     private String address;
@@ -38,6 +38,7 @@ public class DeliveryProcessing {
     public void onPostUpdate(){
         DeliveryCompleted deliveryCompleted = new DeliveryCompleted();
         BeanUtils.copyProperties(this, deliveryCompleted);
+
         deliveryCompleted.publish();
 
 
@@ -90,11 +91,11 @@ public class DeliveryProcessing {
     public void setId(Long id) {
         this.id = id;
     }
-    public Long getReservationId() {
+    public String getReservationId() {
         return reservationId;
     }
 
-    public void setReservationId(Long reservationId) {
+    public void setReservationId(String reservationId) {
         this.reservationId = reservationId;
     }
     public String getCarId() {

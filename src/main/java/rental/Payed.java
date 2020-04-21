@@ -1,4 +1,3 @@
-
 package rental;
 
 public class Payed extends AbstractEvent {
@@ -8,6 +7,10 @@ public class Payed extends AbstractEvent {
     private String customerNm;
     private Integer qty;
     private String reervationId;
+
+    public Payed(){
+        super();
+    }
 
     public Long getId() {
         return id;

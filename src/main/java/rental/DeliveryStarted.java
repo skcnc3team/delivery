@@ -3,7 +3,7 @@ package rental;
 public class DeliveryStarted extends AbstractEvent {
 
     private Long id;
-    private Long reservationId;
+    private String reservationId;
     private String carId;
     private String customerNm;
     private String address;
@@ -21,11 +21,11 @@ public class DeliveryStarted extends AbstractEvent {
     public void setId(Long id) {
         this.id = id;
     }
-    public Long getReservationId() {
+    public String getReservationId() {
         return reservationId;
     }
 
-    public void setReservationId(Long reservationId) {
+    public void setReservationId(String reservationId) {
         this.reservationId = reservationId;
     }
     public String getCarId() {

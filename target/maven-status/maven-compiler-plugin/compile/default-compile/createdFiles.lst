@@ -8,7 +8,7 @@ rental\ReservationCanceled.class
 rental\Application.class
 rental\AbstractEvent.class
 rental\DelivertProcessingRepository.class
-rental\config\kafka\KafkaProcessor.class
+rental\Payed.class
 rental\DeliveryCompleted.class
 rental\KafkaProcessor.class
 rental\ReservationChanged.class
